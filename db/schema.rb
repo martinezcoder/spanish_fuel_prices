@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160212150353) do
+ActiveRecord::Schema.define(version: 20160212154515) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,31 +22,38 @@ ActiveRecord::Schema.define(version: 20160212150353) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "station_data", force: :cascade do |t|
+    t.string  "postal_code"
+    t.string  "address"
+    t.string  "opening_hours"
+    t.integer "latitude"
+    t.integer "longitud"
+    t.string  "location"
+    t.string  "municipality"
+    t.string  "province"
+    t.string  "margin"
+    t.string  "remission"
+    t.string  "label"
+    t.string  "sales_type"
+    t.integer "biodiesel"
+    t.integer "bioetanol"
+    t.integer "compressed_natural_gas"
+    t.integer "liquefied_natural_gas"
+    t.integer "a_diesel"
+    t.integer "gasoline_95"
+    t.integer "gasoline_98"
+    t.integer "new_a_diesel"
+    t.integer "bioetanol_per"
+    t.integer "methyl_ester_per"
+  end
+
   create_table "stations", force: :cascade do |t|
-    t.string   "postal_code"
-    t.string   "address"
-    t.string   "opening_hours"
-    t.integer  "latitude"
-    t.integer  "longitud"
-    t.string   "location"
-    t.string   "municipality"
-    t.string   "province"
-    t.string   "margin"
-    t.string   "remission"
-    t.string   "label"
-    t.string   "sales_type"
-    t.integer  "biodiesel"
-    t.integer  "bioetanol"
-    t.integer  "compressed_natural_gas"
-    t.integer  "liquefied_natural_gas"
-    t.integer  "a_diesel"
-    t.integer  "gasoline_95"
-    t.integer  "gasoline_98"
-    t.integer  "new_a_diesel"
-    t.integer  "bioetanol_per"
-    t.integer  "methyl_ester_per"
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.string  "postal_code"
+    t.string  "address"
+    t.string  "opening_hours"
+    t.integer "latitude"
+    t.integer "longitud"
+    t.string  "label"
   end
 
 end

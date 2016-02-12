@@ -16,7 +16,7 @@ namespace :db do
     http = Curl.get('https://sedeaplicaciones.minetur.gob.es/ServiciosRESTCarburantes/PreciosCarburantes/EstacionesTerrestres/')
     data = JSON.parse http.body_str
     data["ListaEESSPrecio"].each do |station|
-      Station.create! do |s|
+      StationDatum.create! do |s|
         s.postal_code = station["C.P."]
         s.address= station["Dirección"]
         s.opening_hours= station["Horario"]
