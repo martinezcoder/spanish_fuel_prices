@@ -4,8 +4,8 @@ class CreateStations < ActiveRecord::Migration
       t.string :postal_code
       t.string :address
       t.string :opening_hours
-      t.float :latitude
-      t.float :longitud
+      t.integer :latitude
+      t.integer :longitud
       t.string :location
       t.string :municipality
       t.string :province
