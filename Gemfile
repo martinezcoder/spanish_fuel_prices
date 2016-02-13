@@ -5,6 +5,7 @@ gem 'rails', '4.2.5'
 gem 'pg'
 gem 'pry'
 gem 'curb'
+gem 'administrate', '~> 0.1.3'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
