@@ -15,31 +15,53 @@ namespace :db do
   def first_load_batch
     http = Curl.get('https://sedeaplicaciones.minetur.gob.es/ServiciosRESTCarburantes/PreciosCarburantes/EstacionesTerrestres/')
     data = JSON.parse http.body_str
-    data["ListaEESSPrecio"].each do |station|
+    data["ListaEESSPrecio"].each do |item|
+
+      ActiveRecord::Base.transaction do
+
+        province = Province.find_or_create_by!(name: item["Provincia"])
+        municipality = Municipality.find_or_initialize_by(name: item["Municipio"])
+        municipality.province = province
+        municipality.save!
+
+        location = Location.find_or_initialize_by(name: item["Localidad"])
+        location.municipality = municipality
+        location.save!
+
+        station = Station.find_or_initialize_by(label: item["Rótulo"], latitude: custom_integer(item["Latitud"]), longitude: custom_integer(item["Longitud (WGS84)"])) do |s|
+          s.postal_code = item["C.P."]
+          s.address= item["Dirección"]
+          s.opening_hours= item["Horario"]
+        end
+        station.location = location
+        station.municipality = municipality
+        station.province = province
+        station.save!
+
+        today = DateTime.parse(data["Fecha"]).strftime("%Y%m%d")
+        day_price = DayPrice.find_or_initialize_by(day: today, station_id: station.id) do |d|
+          d.biodiesel = custom_integer(item["Precio Biodiesel"])
+          d.bioetanol = custom_integer(item["Precio Bioetanol"])
+          d.compressed_natural_gas = custom_integer(item["Precio Gas Natural Comprimido"])
+          d.liquefied_natural_gas = custom_integer(item["Precio Gas Natural Licuado"])
+          d.a_diesel = custom_integer(item["Precio Gasoleo A"])
+          d.gasoline_95 = custom_integer(item["Precio Gasolina 95 Protección"])
+          d.gasoline_98 = custom_integer(item["Precio Gasolina  98"])
+          d.new_a_diesel = custom_integer(item["Precio Nuevo Gasoleo A"])
+          d.bioetanol_per = custom_integer(item["% BioEtanol"])
+          d.methyl_ester_per = custom_integer(item["% Éster metílico"])
+        end
+        day_price.save!
+
+        print "."
+      end
+=begin
       StationDatum.create! do |s|
-        s.postal_code = station["C.P."]
-        s.address= station["Dirección"]
-        s.opening_hours= station["Horario"]
-        s.latitude= custom_integer(station["Latitud"])
-        s.longitud = custom_integer(station["Longitud (WGS84)"])
-        s.location= station["Localidad"]
-        s.municipality = station["Municipio"]
-        s.province = station["Provincia"]
         s.margin = station["Margen"]
         s.remission = station["Remisión"]
-        s.label = station["Rótulo"]
         s.sales_type = station["Tipo Venta"]
-        s.biodiesel = custom_integer(station["Precio Biodiesel"])
-        s.bioetanol = custom_integer(station["Precio Bioetanol"])
-        s.compressed_natural_gas = custom_integer(station["Precio Gas Natural Comprimido"])
-        s.liquefied_natural_gas = custom_integer(station["Precio Gas Natural Licuado"])
-        s.a_diesel = custom_integer(station["Precio Gasoleo A"])
-        s.gasoline_95 = custom_integer(station["Precio Gasolina 95 Protección"])
-        s.gasoline_98 = custom_integer(station["Precio Gasolina  98"])
-        s.new_a_diesel = custom_integer(station["Precio Nuevo Gasoleo A"])
-        s.bioetanol_per = custom_integer(station["% BioEtanol"])
-        s.methyl_ester_per = custom_integer(station["% Éster metílico"])
       end
+=end
     end
   end
 

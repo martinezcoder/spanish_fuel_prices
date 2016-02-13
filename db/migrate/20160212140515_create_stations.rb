@@ -5,8 +5,17 @@ class CreateStations < ActiveRecord::Migration
       t.string :address
       t.string :opening_hours
       t.integer :latitude
-      t.integer :longitud
+      t.integer :longitude
       t.string :label
+      t.integer :location_id
+      t.integer :municipality_id
+      t.integer :province_id
     end
+    add_index :stations, [:label, :latitude, :longitude], unique: true
+    add_index :stations, :label
+    add_index :stations, [:latitude, :longitude]
+    add_index :stations, :location_id
+    add_index :stations, :municipality_id
+    add_index :stations, :province_id
   end
 end
