@@ -4,15 +4,15 @@ require 'json'
 namespace :db do
 
   desc "First station load..."
-  task first_load: :environment do
+  task day_load: :environment do
     puts "First load..."
     puts Time.now
-    first_load_batch
+    day_load_batch
     puts Time.now
     puts "done."
   end
 
-  def first_load_batch
+  def day_load_batch
     http = Curl.get('https://sedeaplicaciones.minetur.gob.es/ServiciosRESTCarburantes/PreciosCarburantes/EstacionesTerrestres/')
     data = JSON.parse http.body_str
     data["ListaEESSPrecio"].each do |item|
