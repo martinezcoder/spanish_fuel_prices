@@ -16,8 +16,8 @@ class StationDashboard < Administrate::BaseDashboard
     postal_code: Field::String,
     address: Field::String,
     opening_hours: Field::String,
-    latitude: Field::Number,
-    longitude: Field::Number,
+    latitude: Field::String,
+    longitude: Field::String,
     label: Field::String,
   }
 

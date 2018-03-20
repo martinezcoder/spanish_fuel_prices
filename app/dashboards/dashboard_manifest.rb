@@ -15,7 +15,6 @@ class DashboardManifest
     :municipalities,
     :provinces,
     :stations,
-    :station_data,
   ]
 
   # `ROOT_DASHBOARD`

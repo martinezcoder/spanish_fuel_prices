@@ -67,6 +67,6 @@ namespace :db do
 
   def custom_integer(string_number)
     return nil if string_number.nil?
-    string_number.delete!(",").to_i
+    string_number.gsub(",", ".")
   end
 end

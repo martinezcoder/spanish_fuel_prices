@@ -58,37 +58,12 @@ ActiveRecord::Schema.define(version: 20160213130251) do
 
   add_index "provinces", ["name"], name: "index_provinces_on_name", using: :btree
 
-  create_table "station_data", force: :cascade do |t|
-    t.string  "postal_code"
-    t.string  "address"
-    t.string  "opening_hours"
-    t.integer "latitude"
-    t.integer "longitud"
-    t.string  "location"
-    t.string  "municipality"
-    t.string  "province"
-    t.string  "margin"
-    t.string  "remission"
-    t.string  "label"
-    t.string  "sales_type"
-    t.integer "biodiesel"
-    t.integer "bioetanol"
-    t.integer "compressed_natural_gas"
-    t.integer "liquefied_natural_gas"
-    t.integer "a_diesel"
-    t.integer "gasoline_95"
-    t.integer "gasoline_98"
-    t.integer "new_a_diesel"
-    t.integer "bioetanol_per"
-    t.integer "methyl_ester_per"
-  end
-
   create_table "stations", force: :cascade do |t|
     t.string  "postal_code"
     t.string  "address"
     t.string  "opening_hours"
-    t.integer "latitude"
-    t.integer "longitude"
+    t.string  "latitude"
+    t.string  "longitude"
     t.string  "label"
     t.integer "location_id"
     t.integer "municipality_id"
